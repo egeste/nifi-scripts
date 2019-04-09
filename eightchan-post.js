@@ -20,4 +20,6 @@ require('stdin')(post_source => {
     poster_name
   }, null, 2))
 
+  process.exit(0)
+
 })
