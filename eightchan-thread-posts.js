@@ -5,7 +5,7 @@ const cheerio = require('cheerio')
 require('stdin')(thread => {
   const $ = cheerio.load(thread)
 
-  console.log($('.post').map((index, post) => {
+  const posts = $('.post').map((index, post) => {
     const $post = cheerio.load(post)
     return {
       poster_id: $post('span.poster_id').text(),
@@ -15,7 +15,9 @@ require('stdin')(thread => {
       post_content: $post('.body').text(),
       post_timestamp: $post('time').attr('unixtime')
     }
-  }).get())
+  }).get()
+
+  console.log(JSON.stringify(posts, null, 2))
 
   process.exit(0)
 })
