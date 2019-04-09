@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-
+const stdin = require('stdin')
+const stdout = require('stdout-stream')
 const cheerio = require('cheerio')
 
-require('stdin')(thread => {
-  const $ = cheerio.load(thread)
-
-  const posts = $('.post').map((index, post) => {
+stdin(thread => {
+  const posts = cheerio.load(thread)('.post').map((index, post) => {
     const $post = cheerio.load(post)
     return {
       poster_id: $post('span.poster_id').text(),
@@ -17,7 +16,5 @@ require('stdin')(thread => {
     }
   }).get()
 
-  console.log(JSON.stringify(posts, null, 2))
-
-  process.exit(0)
+  stdout.write(JSON.stringify(posts, null, 2))
 })
